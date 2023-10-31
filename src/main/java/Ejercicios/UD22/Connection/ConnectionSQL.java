@@ -11,7 +11,7 @@ import java.sql.*;
 
 public class ConnectionSQL {
 	
-    private Connection connection;
+    public Connection connection;
 
     public ConnectionSQL(String ip, String user, String pass) {
     	
@@ -19,7 +19,7 @@ public class ConnectionSQL {
         
     }
 
-    private void connect(String ip, String user, String pass) {
+    public boolean connect(String ip, String user, String pass) {
     	
         try {
         	
@@ -28,10 +28,14 @@ public class ConnectionSQL {
             
             System.out.println("Conectado a la BBDD");
             
+            return true;
+            
         } catch (SQLException | ClassNotFoundException ex) {
         	
             System.out.println("ERROR al conectar con la BBDD");
             System.out.println(ex);
+            
+            return false;
         }
     }
 

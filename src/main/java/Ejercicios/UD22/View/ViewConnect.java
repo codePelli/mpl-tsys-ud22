@@ -16,10 +16,9 @@ public class ViewConnect extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
+	public JButton btnSi;
+	public JButton btnNo;
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -46,18 +45,20 @@ public class ViewConnect extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton btnNewButton = new JButton("SI");
-		btnNewButton.setForeground(Color.GREEN);
-		btnNewButton.setBackground(Color.GREEN);
-		contentPane.add(btnNewButton);
+		btnSi = new JButton("SI");
+		btnSi.setForeground(Color.BLACK);
+		btnSi.setBackground(Color.GREEN);
+		contentPane.add(btnSi);
+		this.setVisible(true);
 		
 		JLabel lblNewLabel = new JLabel("¿CONECTARSE A LA BASE DE DE DATOS?");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		contentPane.add(lblNewLabel);
 		
-		JButton btnNewButton_1 = new JButton("NO");
-		btnNewButton_1.setBackground(Color.RED);
-		btnNewButton_1.setForeground(Color.RED);
-		contentPane.add(btnNewButton_1);
+		JButton btnNo = new JButton("NO");
+		btnNo.setBackground(Color.RED);
+		btnNo.setForeground(Color.BLACK);
+		contentPane.add(btnNo);
 	}
+	
 }
