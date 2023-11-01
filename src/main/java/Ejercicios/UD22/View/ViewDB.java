@@ -25,6 +25,9 @@ public class ViewDB extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JPanel panel;
+	private JButton btnDelete;
+	private JButton btnUpdate;
 
 	/**
 	 * Launch the application.
@@ -61,30 +64,11 @@ public class ViewDB extends JFrame {
 		lblNewLabel.setBounds(341, 11, 66, 26);
 		contentPane.add(lblNewLabel);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBackground(Color.ORANGE);
 		panel.setBounds(10, 53, 730, 367);
 		contentPane.add(panel);
 		panel.setLayout(null);
-		
-		JLabel lblNewLabel_1 = new JLabel("CLIENTE 1: ID, NOMBRE, APELLIDO, DIRECCION, DNI, FECHA");
-		lblNewLabel_1.setBounds(10, 11, 492, 26);
-		panel.add(lblNewLabel_1);
-		
-		JButton btnNewButton = new JButton("UPDATE");
-		btnNewButton.setBackground(Color.YELLOW);
-		btnNewButton.setBounds(512, 12, 99, 25);
-		panel.add(btnNewButton);
-		
-		JButton btnDelete = new JButton("DELETE");
-		btnDelete.setBackground(Color.RED);
-		btnDelete.setForeground(new Color(0, 0, 0));
-		btnDelete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnDelete.setBounds(621, 12, 99, 25);
-		panel.add(btnDelete);
 		
 		JButton btnInsert = new JButton("INSERT");
 		btnInsert.setBounds(628, 12, 99, 25);
@@ -98,7 +82,8 @@ public class ViewDB extends JFrame {
         	JOptionPane.showMessageDialog(contentPane, "No CLIENTE to show");
         } else {
         	
-        	int y = 50;
+        	int y = 8;
+        	int yy = 10;
         	
         	for (Cliente cliente : cli) {
         		
@@ -106,14 +91,40 @@ public class ViewDB extends JFrame {
                 		+ ", apellido: " + cliente.getApellido() + ", direccion: " + cliente.getDireccion()
                 		+ ", dni: " + cliente.getDni() + ", fecha: " + cliente.getFecha());
                 
+                panel.add(lblCliente);
                 lblCliente.setBounds(10, y, 500, 30);
-                contentPane.add(lblCliente);
                 
-                y = y + 30;        		
+                //BUTTON UPDATE
+        		btnUpdate = new JButton("UPDATE");
+        		btnUpdate.setBounds(550, yy, 80, 23);
+        		btnUpdate.setBackground(Color.YELLOW);
+                btnUpdate.setName("btnUpd" + cliente.getId());
+        		btnUpdate.addActionListener(new ActionListener() {
+        			public void actionPerformed(ActionEvent e) {
+        			}
+        		});
+        		
+                panel.add(btnUpdate);
+
+        		//BUTTON DELETE
+        		btnDelete = new JButton("DELETE");
+        		btnDelete.setBounds(635, yy, 80, 23);
+        		btnDelete.setBackground(Color.RED);
+                btnDelete.setName("btnDel" + cliente.getId());
+        		btnDelete.addActionListener(new ActionListener() {
+        			public void actionPerformed(ActionEvent e) {
+        			}
+        		});
+        		
+                panel.add(btnDelete);
+                
+                y = y + 30;
+                yy = yy + 30;
+                
         	}
         }
         
-        contentPane.revalidate();
-        contentPane.repaint();
+        panel.revalidate();
+        panel.repaint();
 	}
 }

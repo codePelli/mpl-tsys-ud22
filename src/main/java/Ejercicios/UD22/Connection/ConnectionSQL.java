@@ -62,11 +62,11 @@ public class ConnectionSQL {
     	
         try {
         	
-            String query = "CREATE TABLE IF NOT EXISTS " + tableName + " (" + tableSentence + ")";       
+            String query = "CREATE TABLE IF NOT EXISTS " + tableName + " (" + tableSentence + ");";       
             Statement st = connection.createStatement();
             st.executeUpdate(query);
             
-            System.out.println("TABLE " + tableName + "CREATED.");
+            System.out.println("TABLE " + tableName + " CREATED.");
             
         } catch (SQLException ex) {
         	
@@ -163,7 +163,7 @@ public class ConnectionSQL {
     	
     	try {
     		
-    		String query = "SELECT * FROM CLIENTE";
+    		String query = "SELECT * FROM cliente";
     		Statement st = connection.createStatement();
     		ResultSet rs = st.executeQuery(query);
     		
@@ -182,7 +182,7 @@ public class ConnectionSQL {
     		}
     		
     	} catch (SQLException e){
-    		
+    		System.out.println(e.getMessage());
     	}
     	
 		return cli;

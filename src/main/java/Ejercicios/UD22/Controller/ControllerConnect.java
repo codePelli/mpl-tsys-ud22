@@ -29,11 +29,11 @@ public class ControllerConnect {
 		String user = "root";
 		String pass = "password";
 	    connection = new ConnectionSQL(ip, user, pass);
-		
 		DB = JOptionPane.showInputDialog(null, "Name your DB:");
 		
         String queryDB = "CREATE DATABASE IF NOT EXISTS " + DB;
         Statement st;
+        
 		try {
 			
 			st = connection.connection.createStatement();
@@ -42,10 +42,14 @@ public class ControllerConnect {
 			String ip2 = "jdbc:mysql://localhost:33060/" + DB;
 			connection.connect(ip2, user, pass);
 			
-			String tableName = "Cliente";
+		    /*String useDB = "USE " + DB;
+		    Statement st2 = connection.connection.createStatement();
+			st2.execute(useDB);*/
+				
+			String tableName = "cliente";
 			String tableSentence = "id INT AUTO_INCREMENT, nombre VARCHAR(255), "
 					+ "apellido VARCHAR(255), direccion VARCHAR(255), "
-					+ "dni INT, fecha DATE, PRIMARY KEY (id)\";";
+					+ "dni INT, fecha DATE, PRIMARY KEY (id)";
 			
 			connection.createTable(tableName, tableSentence);
 			
@@ -57,19 +61,11 @@ public class ControllerConnect {
 			
 			public void actionPerformed(ActionEvent e) {
 				
-				if (connection.connect(ip, user, pass)) {
-					
-		            JOptionPane.showMessageDialog(null, "Connected to DB");
-		            vc.setVisible(false);
-		            
-		            viewDB.setVisible(true);
-		            viewDB.showCliente(connection.getClientes());
-		            
-				} else {
-					
-		            JOptionPane.showMessageDialog(null, "ERROR connecting to DB");
-
-				}
+	            JOptionPane.showMessageDialog(null, "Connected to DB");
+	            vc.setVisible(false);
+	            
+	            viewDB.setVisible(true);
+	            viewDB.showCliente(connection.getClientes());
 			}
 		});
 		
@@ -78,7 +74,7 @@ public class ControllerConnect {
 			public void actionPerformed(ActionEvent e) {
 				
 				connection.disconnect();
-				
+	            vc.setVisible(false);
 	            JOptionPane.showMessageDialog(null, "Disconnected from DB");
 
 			}

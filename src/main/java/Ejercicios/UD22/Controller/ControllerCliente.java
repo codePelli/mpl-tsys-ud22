@@ -13,7 +13,7 @@ public class ControllerCliente {
 	private ConnectionSQL connection;
 	private ViewDB viewDB;
 	
-	public ControllerCliente(ConnectionSQL connection) {
+	public ControllerCliente(ConnectionSQL connection, ViewDB viewDB) {
 		
 		this.connection = connection;
 		this.viewDB = viewDB;
@@ -35,12 +35,6 @@ public class ControllerCliente {
 	
 	public void deleteCliente(int idCliente) {
 		
-	}
-	
-	public void showCliente() {
-		
-		List<Cliente> clientes = listGetClientes();
-        viewDB.showCliente(clientes);
 	}
 
 }
