@@ -3,9 +3,15 @@ package Ejercicios.UD22.Connection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+
+import Ejercicios.UD22.Controller.ControllerConnect;
+import Ejercicios.UD22.Model.Cliente;
+
 import java.sql.Statement;
 import java.sql.*;
 
@@ -60,11 +66,11 @@ public class ConnectionSQL {
             Statement st = connection.createStatement();
             st.executeUpdate(query);
             
-            System.out.println("Tabla " + tableName + " creada");
+            System.out.println("TABLE " + tableName + "CREATED.");
             
         } catch (SQLException ex) {
         	
-            System.out.println("ERROR al crear la tabla " + tableName);
+            System.out.println("ERROR creating table " + tableName);
             System.out.println(ex.getMessage());
         }
     }
@@ -149,5 +155,36 @@ public class ConnectionSQL {
             System.out.println(ex.getMessage());
     	}
 
+    }
+    
+    public List<Cliente> getClientes(){
+    	
+    	List<Cliente> cli = new ArrayList<>();
+    	
+    	try {
+    		
+    		String query = "SELECT * FROM CLIENTE";
+    		Statement st = connection.createStatement();
+    		ResultSet rs = st.executeQuery(query);
+    		
+    		while(rs.next()) {
+    			
+    			int id = rs.getInt("id");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String direccion = rs.getString("direccion");
+                int dni = rs.getInt("dni");
+                Date fecha = rs.getDate("fecha");
+                
+                Cliente cliente = new Cliente (id, nombre, apellido, direccion, dni, fecha);
+                cli.add(cliente);
+                
+    		}
+    		
+    	} catch (SQLException e){
+    		
+    	}
+    	
+		return cli;
     }
 }

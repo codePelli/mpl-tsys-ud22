@@ -5,12 +5,19 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Ejercicios.UD22.Controller.ControllerCliente;
+import Ejercicios.UD22.Model.Cliente;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollBar;
 
@@ -71,7 +78,7 @@ public class ViewDB extends JFrame {
 		
 		JButton btnDelete = new JButton("DELETE");
 		btnDelete.setBackground(Color.RED);
-		btnDelete.setForeground(Color.RED);
+		btnDelete.setForeground(new Color(0, 0, 0));
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -82,5 +89,31 @@ public class ViewDB extends JFrame {
 		JButton btnInsert = new JButton("INSERT");
 		btnInsert.setBounds(628, 12, 99, 25);
 		contentPane.add(btnInsert);
+	}
+	
+	public void showCliente(List<Cliente> cli) {
+
+        if(cli.isEmpty()) {
+        	
+        	JOptionPane.showMessageDialog(contentPane, "No CLIENTE to show");
+        } else {
+        	
+        	int y = 50;
+        	
+        	for (Cliente cliente : cli) {
+        		
+                JLabel lblCliente = new JLabel("ID: " + cliente.getId() + ", nombre: " + cliente.getNombre()
+                		+ ", apellido: " + cliente.getApellido() + ", direccion: " + cliente.getDireccion()
+                		+ ", dni: " + cliente.getDni() + ", fecha: " + cliente.getFecha());
+                
+                lblCliente.setBounds(10, y, 500, 30);
+                contentPane.add(lblCliente);
+                
+                y = y + 30;        		
+        	}
+        }
+        
+        contentPane.revalidate();
+        contentPane.repaint();
 	}
 }

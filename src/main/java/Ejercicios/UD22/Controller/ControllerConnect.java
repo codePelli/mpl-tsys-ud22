@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import Ejercicios.UD22.Connection.ConnectionSQL;
 import Ejercicios.UD22.View.ViewConnect;
+import Ejercicios.UD22.View.ViewDB;
 
 public class ControllerConnect {
 	
@@ -18,6 +19,7 @@ public class ControllerConnect {
 	private ViewConnect vc;
 	private ConnectionSQL connection;
 	private String DB;
+	ViewDB viewDB = new ViewDB();
 
 	public ControllerConnect(ViewConnect vc) {
 
@@ -40,6 +42,13 @@ public class ControllerConnect {
 			String ip2 = "jdbc:mysql://localhost:33060/" + DB;
 			connection.connect(ip2, user, pass);
 			
+			String tableName = "Cliente";
+			String tableSentence = "id INT AUTO_INCREMENT, nombre VARCHAR(255), "
+					+ "apellido VARCHAR(255), direccion VARCHAR(255), "
+					+ "dni INT, fecha DATE, PRIMARY KEY (id)\";";
+			
+			connection.createTable(tableName, tableSentence);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -52,6 +61,10 @@ public class ControllerConnect {
 					
 		            JOptionPane.showMessageDialog(null, "Connected to DB");
 		            vc.setVisible(false);
+		            
+		            viewDB.setVisible(true);
+		            viewDB.showCliente(connection.getClientes());
+		            
 				} else {
 					
 		            JOptionPane.showMessageDialog(null, "ERROR connecting to DB");
