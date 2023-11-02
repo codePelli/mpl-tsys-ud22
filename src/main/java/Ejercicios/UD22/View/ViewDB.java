@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Ejercicios.UD22.Connection.ConnectionSQL;
 import Ejercicios.UD22.Controller.ControllerCliente;
 import Ejercicios.UD22.Model.Cliente;
 
@@ -28,27 +29,19 @@ public class ViewDB extends JFrame {
 	private JPanel panel;
 	private JButton btnDelete;
 	private JButton btnUpdate;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ViewDB frame = new ViewDB();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
+	private ControllerCliente controllerCliente;
+	private ViewDB viewDB;
+	private ConnectionSQL connection;
 
 	/**
 	 * Create the frame.
+	 * @param connection 
 	 */
-	public ViewDB() {
+	public ViewDB(ConnectionSQL connection) {
+		
+		this.connection = connection;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 766, 470);
 		contentPane = new JPanel();
@@ -94,19 +87,25 @@ public class ViewDB extends JFrame {
                 panel.add(lblCliente);
                 lblCliente.setBounds(10, y, 500, 30);
                 
-                //BUTTON UPDATE
+                //BUTTON UPDATE FOR EACH CLIENTE
         		btnUpdate = new JButton("UPDATE");
         		btnUpdate.setBounds(550, yy, 80, 23);
         		btnUpdate.setBackground(Color.YELLOW);
                 btnUpdate.setName("btnUpd" + cliente.getId());
         		btnUpdate.addActionListener(new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
+        				
+        				int clienteId = cliente.getId();
+        				ControllerCliente controllerCliente = new ControllerCliente(connection);
+        				
+        				ViewUpdate viewUpdate = new ViewUpdate(clienteId, controllerCliente, connection, viewDB);
+        				viewUpdate.setVisible(true);
         			}
         		});
         		
                 panel.add(btnUpdate);
 
-        		//BUTTON DELETE
+        		//BUTTON DELETE FOR EACH CLIENTE
         		btnDelete = new JButton("DELETE");
         		btnDelete.setBounds(635, yy, 80, 23);
         		btnDelete.setBackground(Color.RED);

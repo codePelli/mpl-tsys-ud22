@@ -11,15 +11,18 @@ import javax.swing.JOptionPane;
 import Ejercicios.UD22.Connection.ConnectionSQL;
 import Ejercicios.UD22.View.ViewConnect;
 import Ejercicios.UD22.View.ViewDB;
+import Ejercicios.UD22.View.ViewUpdate;
 
 public class ControllerConnect {
 	
 	private JButton btnSi;
 	private JButton btnNo;
 	private ViewConnect vc;
-	private ConnectionSQL connection;
+	public ConnectionSQL connection;
 	private String DB;
-	ViewDB viewDB = new ViewDB();
+	
+	ViewDB viewDB;
+
 
 	public ControllerConnect(ViewConnect vc) {
 
@@ -41,10 +44,6 @@ public class ControllerConnect {
 			
 			String ip2 = "jdbc:mysql://localhost:33060/" + DB;
 			connection.connect(ip2, user, pass);
-			
-		    /*String useDB = "USE " + DB;
-		    Statement st2 = connection.connection.createStatement();
-			st2.execute(useDB);*/
 				
 			String tableName = "cliente";
 			String tableSentence = "id INT AUTO_INCREMENT, nombre VARCHAR(255), "
@@ -63,13 +62,14 @@ public class ControllerConnect {
 				
 	            JOptionPane.showMessageDialog(null, "Connected to DB");
 	            vc.setVisible(false);
+	            viewDB = new ViewDB(connection);
 	            
 	            viewDB.setVisible(true);
 	            viewDB.showCliente(connection.getClientes());
 			}
 		});
 		
-		vc.btnNo.addActionListener(new ActionListener() {
+		/*vc.btnNo.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
 				
@@ -78,7 +78,7 @@ public class ControllerConnect {
 	            JOptionPane.showMessageDialog(null, "Disconnected from DB");
 
 			}
-		});
+		});*/
 
 	}
 }

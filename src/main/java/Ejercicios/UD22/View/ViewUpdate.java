@@ -5,44 +5,48 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Ejercicios.UD22.Connection.ConnectionSQL;
+import Ejercicios.UD22.Controller.ControllerCliente;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ViewUpdate extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ViewUpdate frame = new ViewUpdate();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
+	private JTextField tfId;
+	private JTextField tfName;
+	private JTextField tfSurname;
+	private JTextField tfAdress;
+	private JTextField tfDni;
+	private JTextField tfDate;
+	private JButton btnUpdate;
+	
+	private ControllerCliente controllerCliente ;
 
 	/**
 	 * Create the frame.
 	 */
-	public ViewUpdate() {
+	public ViewUpdate(int clienteId, ControllerCliente controllerCliente, ConnectionSQL connection, 
+			ViewDB viewDB) {
+		
+		this.controllerCliente = new ControllerCliente(connection);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -88,39 +92,103 @@ public class ViewUpdate extends JFrame {
 		lblFecha.setBounds(10, 193, 61, 24);
 		contentPane.add(lblFecha);
 		
-		textField = new JTextField();
-		textField.setBounds(74, 23, 350, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		tfId = new JTextField();
+		tfId.setBounds(74, 23, 350, 20);
+		contentPane.add(tfId);
+		tfId.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(74, 53, 350, 20);
-		contentPane.add(textField_1);
+		tfName = new JTextField();
+		tfName.setColumns(10);
+		tfName.setBounds(74, 53, 350, 20);
+		contentPane.add(tfName);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(74, 88, 350, 20);
-		contentPane.add(textField_2);
+		tfSurname = new JTextField();
+		tfSurname.setColumns(10);
+		tfSurname.setBounds(74, 88, 350, 20);
+		contentPane.add(tfSurname);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(74, 125, 350, 20);
-		contentPane.add(textField_3);
+		tfAdress = new JTextField();
+		tfAdress.setColumns(10);
+		tfAdress.setBounds(74, 125, 350, 20);
+		contentPane.add(tfAdress);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(74, 160, 350, 20);
-		contentPane.add(textField_4);
+		tfDni = new JTextField();
+		tfDni.setColumns(10);
+		tfDni.setBounds(74, 160, 350, 20);
+		contentPane.add(tfDni);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(74, 195, 350, 20);
-		contentPane.add(textField_5);
+		tfDate = new JTextField();
+		tfDate.setColumns(10);
+		tfDate.setBounds(74, 195, 350, 20);
+		contentPane.add(tfDate);
 		
-		JButton btnNewButton = new JButton("UPDATE");
-		btnNewButton.setBackground(Color.YELLOW);
-		btnNewButton.setBounds(177, 226, 96, 24);
-		contentPane.add(btnNewButton);
+		btnUpdate = new JButton("UPDATE");
+		btnUpdate.setBackground(Color.YELLOW);
+		btnUpdate.setBounds(177, 226, 96, 24);
+		contentPane.add(btnUpdate);
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					updateFields();
+				} catch (SQLException | ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+
 	}
+	
+	public void updateFields() throws SQLException, ParseException {
+		
+		int clienteId = getClienteId();
+		String nombre = getNombre();
+		String apellido = getApellido();
+		String direccion = getDireccion();
+		int dni = getDni();
+		Date fecha = getFecha();
+		
+		controllerCliente.updateCliente(clienteId, nombre, apellido, direccion, dni, fecha);
+	}
+	
+	public int getClienteId() throws SQLException {
+		
+		return Integer.parseInt(tfId.getText());
+	}
+	
+	public String getNombre() {
+		
+		return tfName.getText();
+	}
+	
+	public String getApellido() {
+		
+		return tfSurname.getText();
+	}
+	
+	public String getDireccion() {
+		
+		return tfAdress.getText();
+	}
+	
+	public int getDni() {
+		
+		return Integer.parseInt(tfDni.getText());
+	}
+	
+	public Date getFecha() throws ParseException {
+		
+	    String dateText = tfDate.getText();
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	    java.util.Date parsedDate = dateFormat.parse(dateText);
+	    
+	    return new Date(parsedDate.getTime());
+	}
+	
+	public JButton getBtnUpdate() {
+		
+		return btnUpdate;
+	}
+	
 }
