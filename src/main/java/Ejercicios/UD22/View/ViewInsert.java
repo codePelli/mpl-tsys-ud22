@@ -33,17 +33,17 @@ public class ViewInsert extends JFrame {
 	private JTextField tfDni;
 	private JTextField tfDate;
 	
-	private ViewDB viewDB;
+	private ViewCliente viewCliente;
 	private ControllerCliente controllerCliente;
 
 	/**
 	 * Create the frame.
 	 * @param viewDB 
 	 */
-	public ViewInsert(ControllerCliente controllerCliente, ViewDB viewDB) {
+	public ViewInsert(ControllerCliente controllerCliente, ViewCliente viewDB) {
 		
 		this.controllerCliente = controllerCliente;
-		this.viewDB = viewDB;
+		this.viewCliente = viewDB;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

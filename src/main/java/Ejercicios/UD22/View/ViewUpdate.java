@@ -44,7 +44,7 @@ public class ViewUpdate extends JFrame {
 	 * Create the frame.
 	 */
 	public ViewUpdate(int clienteId, ControllerCliente controllerCliente, ConnectionSQL connection, 
-			ViewDB viewDB) {
+			ViewCliente viewDB) {
 		
 		this.controllerCliente = new ControllerCliente(connection);
 		

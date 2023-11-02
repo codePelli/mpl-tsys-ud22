@@ -4,7 +4,7 @@ import Ejercicios.UD22.Connection.ConnectionSQL;
 import Ejercicios.UD22.Controller.ControllerCliente;
 import Ejercicios.UD22.Controller.ControllerConnect;
 import Ejercicios.UD22.View.ViewConnect;
-import Ejercicios.UD22.View.ViewDB;
+import Ejercicios.UD22.View.ViewCliente;
 import Ejercicios.UD22.View.ViewUpdate;
 
 /**

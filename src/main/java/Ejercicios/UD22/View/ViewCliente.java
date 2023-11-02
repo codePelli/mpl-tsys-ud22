@@ -22,7 +22,7 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollBar;
 
-public class ViewDB extends JFrame {
+public class ViewCliente extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -31,7 +31,7 @@ public class ViewDB extends JFrame {
 	private JButton btnUpdate;
 	
 	private ControllerCliente controllerCliente;
-	private ViewDB viewDB;
+	private ViewCliente viewCliente;
 	private ConnectionSQL connection;
 	private ViewInsert viewInsert;
 
@@ -39,7 +39,7 @@ public class ViewDB extends JFrame {
 	 * Create the frame.
 	 * @param connection 
 	 */
-	public ViewDB(ConnectionSQL connection) {
+	public ViewCliente(ConnectionSQL connection) {
 		
 		this.connection = connection;
 		this.controllerCliente = new ControllerCliente(connection);
@@ -71,7 +71,7 @@ public class ViewDB extends JFrame {
 		btnInsert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-		        viewInsert = new ViewInsert(controllerCliente, ViewDB.this);
+		        viewInsert = new ViewInsert(controllerCliente, ViewCliente.this);
 				viewInsert.setVisible(true);
 			}
 		});
@@ -112,7 +112,7 @@ public class ViewDB extends JFrame {
         				int clienteId = cliente.getId();
         				ControllerCliente controllerCliente = new ControllerCliente(connection);
         				
-        				ViewUpdate viewUpdate = new ViewUpdate(clienteId, controllerCliente, connection, viewDB);
+        				ViewUpdate viewUpdate = new ViewUpdate(clienteId, controllerCliente, connection, viewCliente);
         				viewUpdate.setVisible(true);
         			}
         		});

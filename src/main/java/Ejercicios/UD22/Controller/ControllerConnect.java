@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 
 import Ejercicios.UD22.Connection.ConnectionSQL;
 import Ejercicios.UD22.View.ViewConnect;
-import Ejercicios.UD22.View.ViewDB;
+import Ejercicios.UD22.View.ViewCliente;
 import Ejercicios.UD22.View.ViewUpdate;
 
 public class ControllerConnect {
@@ -21,7 +21,7 @@ public class ControllerConnect {
 	public ConnectionSQL connection;
 	private String DB;
 	
-	ViewDB viewDB;
+	ViewCliente viewCliente;
 
 
 	public ControllerConnect(ViewConnect vc) {
@@ -46,11 +46,17 @@ public class ControllerConnect {
 			connection.connect(ip2, user, pass);
 				
 			String tableName = "cliente";
-			String tableSentence = "id INT AUTO_INCREMENT, nombre VARCHAR(255), "
-					+ "apellido VARCHAR(255), direccion VARCHAR(255), "
-					+ "dni INT, fecha DATE, PRIMARY KEY (id)";
+			String tableSentence = "id INT(11) NOT NULL AUTO_INCREMENT, nombre VARCHAR(255) DEFAULT NULL, "
+					+ "apellido VARCHAR(255) DEFAULT NULL, direccion VARCHAR(255) DEFAULT NULL, "
+					+ "dni INT DEFAULT NULL, fecha DATE DEFAULT NULL, PRIMARY KEY (id)";
+			
+			String tableName2 = "videos";
+			String tableSentence2 = "id INT(11) NOT NULL AUTO_INCREMENT, title VARCHAR(250) DEFAULT NULL, director VARCHAR(250) DEFAULT NULL, "
+					+ "cli_id INT(11) DEFAULT NULL, PRIMARY KEY (id),"
+					+ "CONSTRAINT videos_fk FOREIGN KEY (cli_id) REFERENCES cliente (id)";
 			
 			connection.createTable(tableName, tableSentence);
+			connection.createTable(tableName2, tableSentence2);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -62,10 +68,10 @@ public class ControllerConnect {
 				
 	            JOptionPane.showMessageDialog(null, "Connected to DB");
 	            vc.setVisible(false);
-	            viewDB = new ViewDB(connection);
+	            viewCliente = new ViewCliente(connection);
 	            
-	            viewDB.setVisible(true);
-	            viewDB.showCliente(connection.getClientes());
+	            viewCliente.setVisible(true);
+	            viewCliente.showCliente(connection.getClientes());
 			}
 		});
 		
