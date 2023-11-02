@@ -139,7 +139,7 @@ public class ViewUpdate extends JFrame {
 		});
 
 	}
-	
+	//FUNCTION TO GET DATA FROM TEXTFIELD AND UPDATE THEM
 	public void updateFields() throws SQLException, ParseException {
 		
 		int clienteId = getClienteId();

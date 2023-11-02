@@ -41,6 +41,7 @@ public class ViewDB extends JFrame {
 	public ViewDB(ConnectionSQL connection) {
 		
 		this.connection = connection;
+		this.controllerCliente = new ControllerCliente(connection);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 766, 470);
@@ -68,12 +69,17 @@ public class ViewDB extends JFrame {
 		contentPane.add(btnInsert);
 	}
 	
+	//FUNCTION TO SHOW CLIENTES ON MAIN WINDOW
 	public void showCliente(List<Cliente> cli) {
 
         if(cli.isEmpty()) {
         	
         	JOptionPane.showMessageDialog(contentPane, "No CLIENTE to show");
+        	
         } else {
+        	
+            panel.removeAll();
+            panel.revalidate();
         	
         	int y = 8;
         	int yy = 10;
@@ -112,7 +118,22 @@ public class ViewDB extends JFrame {
                 btnDelete.setName("btnDel" + cliente.getId());
         		btnDelete.addActionListener(new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
+        				        				
+        				int del = JOptionPane.showConfirmDialog(null, "Do you want to delete this cliente?", "Confirm",
+        						JOptionPane.YES_NO_OPTION);
+        				
+        				if (del == JOptionPane.YES_OPTION) {
+        					
+    						int clienteId = cliente.getId();						
+    						controllerCliente.deleteCliente(clienteId);
+    						
+    				        panel.remove(lblCliente);
+                            panel.remove(btnDelete);
+                            panel.revalidate();
+                            panel.repaint();
+            			}
         			}
+        		
         		});
         		
                 panel.add(btnDelete);

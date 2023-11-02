@@ -38,7 +38,7 @@ public class ConnectionSQL {
             
         } catch (SQLException | ClassNotFoundException ex) {
         	
-            System.out.println("ERROR al conectar con la BBDD");
+            System.out.println("ERROR connecting to DB");
             System.out.println(ex);
             
             return false;

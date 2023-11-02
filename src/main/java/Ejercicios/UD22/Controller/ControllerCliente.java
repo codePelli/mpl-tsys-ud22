@@ -8,8 +8,6 @@ import java.util.List;
 
 import Ejercicios.UD22.Connection.ConnectionSQL;
 import Ejercicios.UD22.Model.Cliente;
-import Ejercicios.UD22.View.ViewDB;
-import Ejercicios.UD22.View.ViewUpdate;
 
 public class ControllerCliente {
 	
@@ -30,6 +28,7 @@ public class ControllerCliente {
 		
 	}
 	
+	//FUNCTION TO SEND THE QUERY TO DB FOR UPDATING DATA
 	public void updateCliente(int clienteId, String nombre, String apellido, String direccion, 
 			int dni, Date fecha) {
 		
@@ -47,12 +46,7 @@ public class ControllerCliente {
 		        ps.setDate(5, fecha);
 		        ps.setInt(6, clienteId);
 		        
-		        try {
-			        ps.executeUpdate();
-
-		        } catch (SQLException e) {
-		        	System.out.println(e.getMessage());
-		        }
+		        ps.executeUpdate();
 			
 		} catch (SQLException e){
 			System.out.println(e.getMessage());
@@ -60,8 +54,22 @@ public class ControllerCliente {
 		
 	}
 	
-	public void deleteCliente(int idCliente) {
+	//FUNCTION TO SEND THE QUERY TO DB FOR DELETING DATA
+	public void deleteCliente(int clienteId) {
 		
+		try {
+			
+			String query = "DELETE FROM cliente WHERE id = ?";
+			
+			PreparedStatement ps = connection.connection.prepareStatement(query);
+			
+			ps.setInt(1, clienteId);
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			System.out.println(e.getMessage());
+		}
 	}
 
 }
