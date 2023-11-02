@@ -11,6 +11,7 @@ import Ejercicios.UD22.Controller.ControllerCliente;
 
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.sql.Connection;
@@ -130,7 +131,11 @@ public class ViewUpdate extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
+					
 					updateFields();
+					JOptionPane.showMessageDialog(null, "Cliente updated");
+					dispose();
+					
 				} catch (SQLException | ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -184,11 +189,6 @@ public class ViewUpdate extends JFrame {
 	    java.util.Date parsedDate = dateFormat.parse(dateText);
 	    
 	    return new Date(parsedDate.getTime());
-	}
-	
-	public JButton getBtnUpdate() {
-		
-		return btnUpdate;
 	}
 	
 }

@@ -176,7 +176,7 @@ public class ConnectionSQL {
                 int dni = rs.getInt("dni");
                 Date fecha = rs.getDate("fecha");
                 
-                Cliente cliente = new Cliente (id, nombre, apellido, direccion, dni, fecha);
+                Cliente cliente = new Cliente (nombre, apellido, direccion, dni, fecha);
                 cli.add(cliente);
                 
     		}

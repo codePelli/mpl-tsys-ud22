@@ -5,44 +5,46 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Ejercicios.UD22.Controller.ControllerCliente;
+import Ejercicios.UD22.Model.Cliente;
+
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.awt.event.ActionEvent;
 
 public class ViewInsert extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ViewInsert frame = new ViewInsert();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JTextField tfName;
+	private JTextField tfSurname;
+	private JTextField tfAdress;
+	private JTextField tfDni;
+	private JTextField tfDate;
+	
+	private ViewDB viewDB;
+	private ControllerCliente controllerCliente;
 
 	/**
 	 * Create the frame.
+	 * @param viewDB 
 	 */
-	public ViewInsert() {
+	public ViewInsert(ControllerCliente controllerCliente, ViewDB viewDB) {
+		
+		this.controllerCliente = controllerCliente;
+		this.viewDB = viewDB;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -51,12 +53,6 @@ public class ViewInsert extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("id:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel.setBounds(10, 21, 31, 24);
-		contentPane.add(lblNewLabel);
 		
 		JLabel lblNombre = new JLabel("nombre:");
 		lblNombre.setHorizontalAlignment(SwingConstants.LEFT);
@@ -88,39 +84,90 @@ public class ViewInsert extends JFrame {
 		lblFecha.setBounds(10, 193, 61, 24);
 		contentPane.add(lblFecha);
 		
-		textField = new JTextField();
-		textField.setBounds(74, 23, 350, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		tfName = new JTextField();
+		tfName.setColumns(10);
+		tfName.setBounds(74, 53, 350, 20);
+		contentPane.add(tfName);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(74, 53, 350, 20);
-		contentPane.add(textField_1);
+		tfSurname = new JTextField();
+		tfSurname.setColumns(10);
+		tfSurname.setBounds(74, 88, 350, 20);
+		contentPane.add(tfSurname);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(74, 88, 350, 20);
-		contentPane.add(textField_2);
+		tfAdress = new JTextField();
+		tfAdress.setColumns(10);
+		tfAdress.setBounds(74, 125, 350, 20);
+		contentPane.add(tfAdress);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(74, 125, 350, 20);
-		contentPane.add(textField_3);
+		tfDni = new JTextField();
+		tfDni.setColumns(10);
+		tfDni.setBounds(74, 160, 350, 20);
+		contentPane.add(tfDni);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(74, 160, 350, 20);
-		contentPane.add(textField_4);
+		tfDate = new JTextField();
+		tfDate.setColumns(10);
+		tfDate.setBounds(74, 195, 350, 20);
+		contentPane.add(tfDate);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(74, 195, 350, 20);
-		contentPane.add(textField_5);
+		JButton btnInsert = new JButton("INSERT");
+		btnInsert.setBackground(Color.GREEN);
+		btnInsert.setBounds(177, 226, 96, 24);
+		contentPane.add(btnInsert);
+		btnInsert.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String nombre = getNombre();
+				String apellido = getApellido();
+				String direccion = getDireccion();
+				int dni = getDni();
+				Date fecha = getFecha();
+				
+				Cliente cliente = new Cliente(nombre, apellido, direccion, dni, fecha);
+				
+				controllerCliente.insertCliente(cliente);
+				
+				JOptionPane.showMessageDialog(null, "Cliente created");
+				
+				viewDB.showCliente(controllerCliente.listGetClientes());
+				dispose();
+			}
+		});
+	}
+	
+	public String getNombre() {
 		
-		JButton btnNewButton = new JButton("INSERT");
-		btnNewButton.setBackground(Color.GREEN);
-		btnNewButton.setBounds(177, 226, 96, 24);
-		contentPane.add(btnNewButton);
+		return tfName.getText();
+	}
+	
+	public String getApellido() {
+		
+		return tfSurname.getText();
+	}
+	
+	public String getDireccion() {
+		
+		return tfAdress.getText();
+	}
+	
+	public int getDni() {
+		
+		return Integer.parseInt(tfDni.getText());
+	}
+	
+	public Date getFecha() {
+		
+		try {
+			
+		    String dateText = tfDate.getText();
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		    java.util.Date parsedDate = dateFormat.parse(dateText);
+		    
+		    return new Date(parsedDate.getTime());
+		} catch(ParseException e) {
+			
+			return null;
+		}
+	
+
 	}
 }

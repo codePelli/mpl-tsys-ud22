@@ -24,8 +24,27 @@ public class ControllerCliente {
 		
 	}
 	
+	//FUNCTION TO SEND THE QUERY TO DB FOR INSERTING DATA
 	public void insertCliente(Cliente cliente) {
 		
+		try {
+			
+			String query = "INSERT INTO cliente (nombre, apellido, direccion,"
+					+ " dni, fecha) VALUES (?, ?, ?, ?, ?)";
+			
+	        PreparedStatement ps = connection.connection.prepareStatement(query);
+	        
+	        ps.setString(1, cliente.getNombre());
+	        ps.setString(2, cliente.getApellido());
+	        ps.setString(3, cliente.getDireccion());
+	        ps.setInt(4, cliente.getDni());
+	        ps.setDate(5, cliente.getFecha());
+	        ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	//FUNCTION TO SEND THE QUERY TO DB FOR UPDATING DATA

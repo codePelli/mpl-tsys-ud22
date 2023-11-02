@@ -33,6 +33,7 @@ public class ViewDB extends JFrame {
 	private ControllerCliente controllerCliente;
 	private ViewDB viewDB;
 	private ConnectionSQL connection;
+	private ViewInsert viewInsert;
 
 	/**
 	 * Create the frame.
@@ -42,7 +43,7 @@ public class ViewDB extends JFrame {
 		
 		this.connection = connection;
 		this.controllerCliente = new ControllerCliente(connection);
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 766, 470);
 		contentPane = new JPanel();
@@ -67,6 +68,13 @@ public class ViewDB extends JFrame {
 		JButton btnInsert = new JButton("INSERT");
 		btnInsert.setBounds(628, 12, 99, 25);
 		contentPane.add(btnInsert);
+		btnInsert.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+		        viewInsert = new ViewInsert(controllerCliente, ViewDB.this);
+				viewInsert.setVisible(true);
+			}
+		});
 	}
 	
 	//FUNCTION TO SHOW CLIENTES ON MAIN WINDOW
