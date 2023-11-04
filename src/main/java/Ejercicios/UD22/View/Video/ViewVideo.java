@@ -125,8 +125,8 @@ public class ViewVideo extends JFrame {
         				int videoId = video.getId();
         				ControllerVideo controllerVideo = new ControllerVideo(connection);
         				
-        				//ViewUpdateVideo viewUpdateVideo = new ViewUpdateVideo(videoId, controllerVideo, connection, viewVideo);
-        				//viewUpdateVideo.setVisible(true);
+        				ViewUpdateVideo viewUpdateVideo = new ViewUpdateVideo(videoId, controllerVideo, connection, viewVideo);
+        				viewUpdateVideo.setVisible(true);
         			}
         		});
         		

@@ -26,7 +26,7 @@ public class ControllerVideo {
 	}
 	
 	//FUNCTION TO SEND THE QUERY TO DB FOR INSERTING DATA
-	public void insertVideo(Video videos) {
+	public void insertVideo(Video video) {
 		
 		try {
 			
@@ -35,9 +35,9 @@ public class ControllerVideo {
 			
 	        PreparedStatement ps = connection.connection.prepareStatement(query);
 	        
-	        ps.setString(1, videos.getTitle());
-	        ps.setString(2, videos.getDirector());
-	        ps.setInt(3, videos.getCli_id());
+	        ps.setString(1, video.getTitle());
+	        ps.setString(2, video.getDirector());
+	        ps.setInt(3, video.getCli_id());
 	        ps.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -47,18 +47,18 @@ public class ControllerVideo {
 	}
 	
 	//FUNCTION TO SEND THE QUERY TO DB FOR UPDATING DATA
-	public void updateVideos(String title, String director, int clienteId, int videoId) {
+	public void updateVideo(int id, String title, String director, int cli_id) {
 		
 		try {
 			
-	        String query = "UPDATE video SET title = ?, director = ?, cli_id = ?, WHERE id = ?";
+	        String query = "UPDATE video SET title = ?, director = ?, cli_id = ? WHERE id = ?";
 	        
 		       PreparedStatement ps = connection.connection.prepareStatement(query);
 		       
 		        ps.setString(1, title);
 		        ps.setString(2, director);
-		        ps.setInt(3, clienteId);
-		        ps.setInt(4, videoId);
+		        ps.setInt(3, cli_id);
+		        ps.setInt(4, id);
 		        
 		        ps.executeUpdate();
 			
