@@ -122,10 +122,10 @@ public class ViewVideo extends JFrame {
         		btnUpdate.addActionListener(new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
         				
-        				int videoId = video.getId();
+        				int id = video.getId();
         				ControllerVideo controllerVideo = new ControllerVideo(connection);
         				
-        				ViewUpdateVideo viewUpdateVideo = new ViewUpdateVideo(videoId, controllerVideo, connection, viewVideo);
+        				ViewUpdateVideo viewUpdateVideo = new ViewUpdateVideo(id, controllerVideo, connection, viewVideo);
         				viewUpdateVideo.setVisible(true);
         			}
         		});
@@ -140,13 +140,13 @@ public class ViewVideo extends JFrame {
         		btnDelete.addActionListener(new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
         				        				
-        				int del = JOptionPane.showConfirmDialog(null, "Do you want to delete this cliente?", "Confirm",
+        				int del = JOptionPane.showConfirmDialog(null, "Do you want to delete this video?", "Confirm",
         						JOptionPane.YES_NO_OPTION);
         				
         				if (del == JOptionPane.YES_OPTION) {
         					
-    						int videoId = video.getId();						
-    						controllerVideo.deleteVideo(videoId);
+    						int id = video.getId();						
+    						controllerVideo.deleteVideo(id);
     						
     				        panel.remove(lblVideo);
                             panel.remove(btnDelete);

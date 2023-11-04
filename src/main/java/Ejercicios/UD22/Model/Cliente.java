@@ -11,14 +11,24 @@ public class Cliente {
 	private int dni;
 	private Date fecha;
 
-	public Cliente(String nombre, String apellido, String direccion, 
+	public Cliente(int id, String nombre, String apellido, String direccion, 
 			int dni, Date fecha) {
 		// TODO Auto-generated constructor stub
+		this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.direccion = direccion;
         this.dni = dni;
         this.fecha = fecha;
+	}
+
+	public Cliente(String nombre, String apellido, String direccion, int dni, Date fecha) {
+		// TODO Auto-generated constructor stub
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.direccion = direccion;
+		this.dni = dni;
+		this.fecha = fecha;
 	}
 
 	public int getId() {

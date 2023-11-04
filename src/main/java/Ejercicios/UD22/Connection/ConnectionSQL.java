@@ -177,7 +177,7 @@ public class ConnectionSQL {
                 int dni = rs.getInt("dni");
                 Date fecha = rs.getDate("fecha");
                 
-                Cliente cliente = new Cliente (nombre, apellido, direccion, dni, fecha);
+                Cliente cliente = new Cliente (id, nombre, apellido, direccion, dni, fecha);
                 cli.add(cliente);
                 
     		}
@@ -206,7 +206,7 @@ public class ConnectionSQL {
                 String director = rs.getString("director");
                 int cli_id = rs.getInt("cli_id");
                 
-                Video video = new Video (title, director, cli_id);
+                Video video = new Video (id, title, director, cli_id);
                 vid.add(video);
                 
     		}

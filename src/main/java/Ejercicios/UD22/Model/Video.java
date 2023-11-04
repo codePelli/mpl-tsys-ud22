@@ -54,7 +54,7 @@ public class Video {
 		return cli_id;
 	}
 
-	public void getCli_id(int cli_id) {
+	public void setCli_id(int cli_id) {
 		this.cli_id = cli_id;
 	}
 

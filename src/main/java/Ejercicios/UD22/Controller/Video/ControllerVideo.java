@@ -3,6 +3,7 @@ package Ejercicios.UD22.Controller.Video;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -69,7 +70,7 @@ public class ControllerVideo {
 	}
 	
 	//FUNCTION TO SEND THE QUERY TO DB FOR DELETING DATA
-	public void deleteVideos(int videoId) {
+	public void deleteVideo(int id) {
 		
 		try {
 			
@@ -77,24 +78,7 @@ public class ControllerVideo {
 			
 			PreparedStatement ps = connection.connection.prepareStatement(query);
 			
-			ps.setInt(1, videoId);
-			ps.executeUpdate();
-			
-		} catch (SQLException e) {
-			
-			System.out.println(e.getMessage());
-		}
-	}
-
-	public void deleteVideo(int videoId) {
-		
-		try {
-			
-			String query = "DELETE FROM video WHERE id = ?";
-			
-			PreparedStatement ps = connection.connection.prepareStatement(query);
-			
-			ps.setInt(1, videoId);
+			ps.setInt(1, id);
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
