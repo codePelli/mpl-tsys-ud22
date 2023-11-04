@@ -1,28 +1,27 @@
-package Ejercicios.UD22.View;
+package Ejercicios.UD22.View.Video;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import Ejercicios.UD22.Connection.ConnectionSQL;
-import Ejercicios.UD22.Controller.ControllerCliente;
+import Ejercicios.UD22.Controller.Cliente.ControllerCliente;
+import Ejercicios.UD22.Controller.Video.ControllerVideo;
 import Ejercicios.UD22.Model.Cliente;
+import Ejercicios.UD22.Model.Video;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Color;
-import javax.swing.SwingConstants;
-import java.awt.Font;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.util.List;
-import java.awt.event.ActionEvent;
-import javax.swing.JScrollBar;
-
-public class ViewCliente extends JFrame {
+public class ViewVideo extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -30,19 +29,18 @@ public class ViewCliente extends JFrame {
 	private JButton btnDelete;
 	private JButton btnUpdate;
 	
-	private ControllerCliente controllerCliente;
-	private ViewCliente viewCliente;
+	private ControllerVideo controllerVideo;
+	private ViewVideo viewVideo;
 	private ConnectionSQL connection;
-	private ViewInsert viewInsert;
+	private ViewInsertVideo viewInsert;
 
 	/**
 	 * Create the frame.
-	 * @param connection 
 	 */
-	public ViewCliente(ConnectionSQL connection) {
+	public ViewVideo(ConnectionSQL connection) {
 		
 		this.connection = connection;
-		this.controllerCliente = new ControllerCliente(connection);
+		this.controllerVideo = new ControllerVideo(connection);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 766, 470);
@@ -53,7 +51,7 @@ public class ViewCliente extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("CLIENTES");
+		JLabel lblNewLabel = new JLabel("VIDEOS");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(341, 11, 66, 26);
@@ -71,18 +69,18 @@ public class ViewCliente extends JFrame {
 		btnInsert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-		        viewInsert = new ViewInsert(controllerCliente, ViewCliente.this);
+		        viewInsert = new ViewInsertVideo(controllerVideo, ViewVideo.this);
 				viewInsert.setVisible(true);
 			}
 		});
 	}
 	
 	//FUNCTION TO SHOW CLIENTES ON MAIN WINDOW
-	public void showCliente(List<Cliente> cli) {
+	public void showVideo(List<Video> vid) {
 
-        if(cli.isEmpty()) {
+        if(vid.isEmpty()) {
         	
-        	JOptionPane.showMessageDialog(contentPane, "No CLIENTE to show");
+        	JOptionPane.showMessageDialog(contentPane, "No VIDEO to show");
         	
         } else {
         	
@@ -92,28 +90,27 @@ public class ViewCliente extends JFrame {
         	int y = 8;
         	int yy = 10;
         	
-        	for (Cliente cliente : cli) {
+        	for (Video video : vid) {
         		
-                JLabel lblCliente = new JLabel("ID: " + cliente.getId() + ", nombre: " + cliente.getNombre()
-                		+ ", apellido: " + cliente.getApellido() + ", direccion: " + cliente.getDireccion()
-                		+ ", dni: " + cliente.getDni() + ", fecha: " + cliente.getFecha());
+                JLabel lblVideo = new JLabel("ID: " + video.getId() + ", title: " + video.getTitle()
+                		+ ", director: " + video.getDirector() + ", cli_id: " + video.getCli_id());
                 
-                panel.add(lblCliente);
-                lblCliente.setBounds(10, y, 500, 30);
+                panel.add(lblVideo);
+                lblVideo.setBounds(10, y, 500, 30);
                 
                 //BUTTON UPDATE FOR EACH CLIENTE
         		btnUpdate = new JButton("UPDATE");
         		btnUpdate.setBounds(550, yy, 80, 23);
         		btnUpdate.setBackground(Color.YELLOW);
-                btnUpdate.setName("btnUpd" + cliente.getId());
+                btnUpdate.setName("btnUpd" + video.getId());
         		btnUpdate.addActionListener(new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
         				
-        				int clienteId = cliente.getId();
-        				ControllerCliente controllerCliente = new ControllerCliente(connection);
+        				int videoId = video.getId();
+        				ControllerVideo controllerVideo = new ControllerVideo(connection);
         				
-        				ViewUpdate viewUpdate = new ViewUpdate(clienteId, controllerCliente, connection, viewCliente);
-        				viewUpdate.setVisible(true);
+        				//ViewUpdateVideo viewUpdateVideo = new ViewUpdateVideo(videoId, controllerVideo, connection, viewVideo);
+        				//viewUpdateVideo.setVisible(true);
         			}
         		});
         		
@@ -123,7 +120,7 @@ public class ViewCliente extends JFrame {
         		btnDelete = new JButton("DELETE");
         		btnDelete.setBounds(635, yy, 80, 23);
         		btnDelete.setBackground(Color.RED);
-                btnDelete.setName("btnDel" + cliente.getId());
+                btnDelete.setName("btnDel" + video.getId());
         		btnDelete.addActionListener(new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
         				        				
@@ -132,10 +129,10 @@ public class ViewCliente extends JFrame {
         				
         				if (del == JOptionPane.YES_OPTION) {
         					
-    						int clienteId = cliente.getId();						
-    						controllerCliente.deleteCliente(clienteId);
+    						int videoId = video.getId();						
+    						controllerVideo.deleteVideo(videoId);
     						
-    				        panel.remove(lblCliente);
+    				        panel.remove(lblVideo);
                             panel.remove(btnDelete);
                             panel.revalidate();
                             panel.repaint();
@@ -155,4 +152,5 @@ public class ViewCliente extends JFrame {
         panel.revalidate();
         panel.repaint();
 	}
+
 }

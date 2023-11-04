@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 import Ejercicios.UD22.Controller.ControllerConnect;
 import Ejercicios.UD22.Model.Cliente;
+import Ejercicios.UD22.Model.Video;
 
 import java.sql.Statement;
 import java.sql.*;
@@ -32,7 +33,7 @@ public class ConnectionSQL {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(ip, user, pass);
             
-            System.out.println("Conectado a la BBDD");
+            System.out.println("Connected to DB");
             
             return true;
             
@@ -50,11 +51,11 @@ public class ConnectionSQL {
         try {
         	
             connection.close();
-            System.out.println("Te desconectaste de la BBDD");
+            System.out.println("You disconnected from DB");
             
         } catch (SQLException ex) {
         	
-            System.out.println("ERROR al desconectar");
+            System.out.println("ERROR when desconnecting");
         }
     }
 
@@ -186,5 +187,34 @@ public class ConnectionSQL {
     	}
     	
 		return cli;
+    }
+    
+    public List<Video> getVideo(){
+    	
+    	List<Video> vid = new ArrayList<>();
+    	
+    	try {
+    		
+    		String query = "SELECT * FROM video";
+    		Statement st = connection.createStatement();
+    		ResultSet rs = st.executeQuery(query);
+    		
+    		while(rs.next()) {
+    			
+    			int id = rs.getInt("id");
+                String title = rs.getString("title");
+                String director = rs.getString("director");
+                int cli_id = rs.getInt("cli_id");
+                
+                Video video = new Video (title, director, cli_id);
+                vid.add(video);
+                
+    		}
+    		
+    	} catch (SQLException e){
+    		System.out.println(e.getMessage());
+    	}
+    	
+		return vid;
     }
 }

@@ -1,4 +1,4 @@
-package Ejercicios.UD22.Controller;
+package Ejercicios.UD22.Controller.Cliente;
 
 import java.sql.Date;
 import java.sql.DriverManager;

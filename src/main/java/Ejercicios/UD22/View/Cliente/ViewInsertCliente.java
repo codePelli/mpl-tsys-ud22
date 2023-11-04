@@ -1,4 +1,4 @@
-package Ejercicios.UD22.View;
+package Ejercicios.UD22.View.Cliente;
 
 import java.awt.EventQueue;
 
@@ -6,47 +6,44 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Ejercicios.UD22.Connection.ConnectionSQL;
-import Ejercicios.UD22.Controller.ControllerCliente;
+import Ejercicios.UD22.Controller.Cliente.ControllerCliente;
+import Ejercicios.UD22.Model.Cliente;
 
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
-import java.sql.Connection;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ViewUpdate extends JFrame {
+public class ViewInsertCliente extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	
-	private JTextField tfId;
 	private JTextField tfName;
 	private JTextField tfSurname;
 	private JTextField tfAdress;
 	private JTextField tfDni;
 	private JTextField tfDate;
-	private JButton btnUpdate;
 	
-	private ControllerCliente controllerCliente ;
+	private ViewCliente viewCliente;
+	private ControllerCliente controllerCliente;
 
 	/**
 	 * Create the frame.
+	 * @param viewCiente 
 	 */
-	public ViewUpdate(int clienteId, ControllerCliente controllerCliente, ConnectionSQL connection, 
-			ViewCliente viewDB) {
+	public ViewInsertCliente(ControllerCliente controllerCliente, ViewCliente viewCiente) {
 		
-		this.controllerCliente = new ControllerCliente(connection);
+		this.controllerCliente = controllerCliente;
+		this.viewCliente = viewCiente;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -56,12 +53,6 @@ public class ViewUpdate extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("id:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel.setBounds(10, 21, 31, 24);
-		contentPane.add(lblNewLabel);
 		
 		JLabel lblNombre = new JLabel("nombre:");
 		lblNombre.setHorizontalAlignment(SwingConstants.LEFT);
@@ -93,11 +84,6 @@ public class ViewUpdate extends JFrame {
 		lblFecha.setBounds(10, 193, 61, 24);
 		contentPane.add(lblFecha);
 		
-		tfId = new JTextField();
-		tfId.setBounds(74, 23, 350, 20);
-		contentPane.add(tfId);
-		tfId.setColumns(10);
-		
 		tfName = new JTextField();
 		tfName.setColumns(10);
 		tfName.setBounds(74, 53, 350, 20);
@@ -123,43 +109,29 @@ public class ViewUpdate extends JFrame {
 		tfDate.setBounds(74, 195, 350, 20);
 		contentPane.add(tfDate);
 		
-		btnUpdate = new JButton("UPDATE");
-		btnUpdate.setBackground(Color.YELLOW);
-		btnUpdate.setBounds(177, 226, 96, 24);
-		contentPane.add(btnUpdate);
-		btnUpdate.addActionListener(new ActionListener() {
+		JButton btnInsert = new JButton("INSERT");
+		btnInsert.setBackground(Color.GREEN);
+		btnInsert.setBounds(177, 226, 96, 24);
+		contentPane.add(btnInsert);
+		btnInsert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				try {
-					
-					updateFields();
-					JOptionPane.showMessageDialog(null, "Cliente updated");
-					dispose();
-					
-				} catch (SQLException | ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				String nombre = getNombre();
+				String apellido = getApellido();
+				String direccion = getDireccion();
+				int dni = getDni();
+				Date fecha = getFecha();
+				
+				Cliente cliente = new Cliente(nombre, apellido, direccion, dni, fecha);
+				
+				controllerCliente.insertCliente(cliente);
+				
+				JOptionPane.showMessageDialog(null, "Cliente created");
+				
+				viewCiente.showCliente(controllerCliente.listGetClientes());
+				dispose();
 			}
 		});
-
-	}
-	//FUNCTION TO GET DATA FROM TEXTFIELD AND UPDATE THEM
-	public void updateFields() throws SQLException, ParseException {
-		
-		int clienteId = getClienteId();
-		String nombre = getNombre();
-		String apellido = getApellido();
-		String direccion = getDireccion();
-		int dni = getDni();
-		Date fecha = getFecha();
-		
-		controllerCliente.updateCliente(clienteId, nombre, apellido, direccion, dni, fecha);
-	}
-	
-	public int getClienteId() throws SQLException {
-		
-		return Integer.parseInt(tfId.getText());
 	}
 	
 	public String getNombre() {
@@ -182,13 +154,20 @@ public class ViewUpdate extends JFrame {
 		return Integer.parseInt(tfDni.getText());
 	}
 	
-	public Date getFecha() throws ParseException {
+	public Date getFecha() {
 		
-	    String dateText = tfDate.getText();
-	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	    java.util.Date parsedDate = dateFormat.parse(dateText);
-	    
-	    return new Date(parsedDate.getTime());
-	}
+		try {
+			
+		    String dateText = tfDate.getText();
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		    java.util.Date parsedDate = dateFormat.parse(dateText);
+		    
+		    return new Date(parsedDate.getTime());
+		} catch(ParseException e) {
+			
+			return null;
+		}
 	
+
+	}
 }

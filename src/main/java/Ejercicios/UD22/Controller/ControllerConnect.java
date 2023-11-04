@@ -10,8 +10,9 @@ import javax.swing.JOptionPane;
 
 import Ejercicios.UD22.Connection.ConnectionSQL;
 import Ejercicios.UD22.View.ViewConnect;
-import Ejercicios.UD22.View.ViewCliente;
-import Ejercicios.UD22.View.ViewUpdate;
+import Ejercicios.UD22.View.Cliente.ViewCliente;
+import Ejercicios.UD22.View.Cliente.ViewUpdateCliente;
+import Ejercicios.UD22.View.Video.ViewVideo;
 
 public class ControllerConnect {
 	
@@ -22,7 +23,7 @@ public class ControllerConnect {
 	private String DB;
 	
 	ViewCliente viewCliente;
-
+	ViewVideo viewVideo;
 
 	public ControllerConnect(ViewConnect vc) {
 
@@ -31,6 +32,7 @@ public class ControllerConnect {
 		String ip = "jdbc:mysql://localhost:33060";
 		String user = "root";
 		String pass = "password";
+		
 	    connection = new ConnectionSQL(ip, user, pass);
 		DB = JOptionPane.showInputDialog(null, "Name your DB:");
 		
@@ -50,7 +52,7 @@ public class ControllerConnect {
 					+ "apellido VARCHAR(255) DEFAULT NULL, direccion VARCHAR(255) DEFAULT NULL, "
 					+ "dni INT DEFAULT NULL, fecha DATE DEFAULT NULL, PRIMARY KEY (id)";
 			
-			String tableName2 = "videos";
+			String tableName2 = "video";
 			String tableSentence2 = "id INT(11) NOT NULL AUTO_INCREMENT, title VARCHAR(250) DEFAULT NULL, director VARCHAR(250) DEFAULT NULL, "
 					+ "cli_id INT(11) DEFAULT NULL, PRIMARY KEY (id),"
 					+ "CONSTRAINT videos_fk FOREIGN KEY (cli_id) REFERENCES cliente (id)";
@@ -62,11 +64,11 @@ public class ControllerConnect {
 			e.printStackTrace();
 		}
 
-		vc.btnSi.addActionListener(new ActionListener() {
+		vc.btnCliente.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
 				
-	            JOptionPane.showMessageDialog(null, "Connected to DB");
+	            JOptionPane.showMessageDialog(null, "Showing table Cliente");
 	            vc.setVisible(false);
 	            viewCliente = new ViewCliente(connection);
 	            
@@ -75,16 +77,19 @@ public class ControllerConnect {
 			}
 		});
 		
-		/*vc.btnNo.addActionListener(new ActionListener() {
+		vc.btnVideo.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
 				
-				connection.disconnect();
+	            JOptionPane.showMessageDialog(null, "Showing table Videos");
 	            vc.setVisible(false);
-	            JOptionPane.showMessageDialog(null, "Disconnected from DB");
+	            viewVideo = new ViewVideo(connection);
+	            
+	            viewVideo.setVisible(true);
+	            viewVideo.showVideo(connection.getVideo());
 
 			}
-		});*/
+		});
 
 	}
 }

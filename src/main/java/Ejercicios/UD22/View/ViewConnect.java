@@ -16,21 +16,9 @@ public class ViewConnect extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	public JButton btnSi;
+	public JButton btnCliente;
 	public JButton btnNo;
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ViewConnect frame = new ViewConnect();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	public JButton btnVideo;
 
 	/**
 	 * Create the frame.
@@ -45,20 +33,21 @@ public class ViewConnect extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		btnSi = new JButton("SI");
-		btnSi.setForeground(Color.BLACK);
-		btnSi.setBackground(Color.GREEN);
-		contentPane.add(btnSi);
+		btnCliente = new JButton("CLIENTE");
+		btnCliente.setForeground(Color.BLACK);
+		btnCliente.setBackground(Color.GREEN);
+		contentPane.add(btnCliente);
 		this.setVisible(true);
 		
-		JLabel lblNewLabel = new JLabel("¿CONECTARSE A LA BASE DE DE DATOS?");
+		JLabel lblNewLabel = new JLabel("CHOOSE ONE OF THESE TABLES");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		contentPane.add(lblNewLabel);
 		
-		JButton btnNo = new JButton("NO");
-		btnNo.setBackground(Color.RED);
-		btnNo.setForeground(Color.BLACK);
-		contentPane.add(btnNo);
+		btnVideo = new JButton("VIDEOS");
+		btnVideo.setBackground(Color.RED);
+		btnVideo.setForeground(Color.BLACK);
+		contentPane.add(btnVideo);
+		this.setVisible(true);
 	}
 	
 }
