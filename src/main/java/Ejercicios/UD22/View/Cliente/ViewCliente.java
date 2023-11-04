@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import Ejercicios.UD22.Connection.ConnectionSQL;
 import Ejercicios.UD22.Controller.Cliente.ControllerCliente;
 import Ejercicios.UD22.Model.Cliente;
+import Ejercicios.UD22.View.ViewConnect;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -64,6 +65,21 @@ public class ViewCliente extends JFrame {
 		panel.setBounds(10, 53, 730, 367);
 		contentPane.add(panel);
 		panel.setLayout(null);
+		
+		JButton btnBack = new JButton("BACK");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+		        ViewConnect viewConnect = new ViewConnect();
+		        viewConnect.setVisible(true);
+		        dispose();
+			}
+		});
+		btnBack.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnBack.setForeground(Color.RED);
+		btnBack.setBounds(10, 13, 89, 24);
+		contentPane.add(btnBack);
+		
 		
 		JButton btnInsert = new JButton("INSERT");
 		btnInsert.setBounds(628, 12, 99, 25);

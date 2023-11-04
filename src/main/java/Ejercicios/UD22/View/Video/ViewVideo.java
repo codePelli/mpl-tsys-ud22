@@ -20,6 +20,7 @@ import Ejercicios.UD22.Controller.Cliente.ControllerCliente;
 import Ejercicios.UD22.Controller.Video.ControllerVideo;
 import Ejercicios.UD22.Model.Cliente;
 import Ejercicios.UD22.Model.Video;
+import Ejercicios.UD22.View.ViewConnect;
 
 public class ViewVideo extends JFrame {
 
@@ -66,6 +67,21 @@ public class ViewVideo extends JFrame {
 		JButton btnInsert = new JButton("INSERT");
 		btnInsert.setBounds(628, 12, 99, 25);
 		contentPane.add(btnInsert);
+		
+		JButton btnBack = new JButton("BACK");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+		        ViewConnect viewConnect = new ViewConnect();
+		        viewConnect.setVisible(true);
+		        dispose();
+			}
+		});
+		btnBack.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnBack.setForeground(Color.RED);
+		btnBack.setBounds(10, 13, 89, 24);
+		contentPane.add(btnBack);
+		
 		btnInsert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -152,5 +168,4 @@ public class ViewVideo extends JFrame {
         panel.revalidate();
         panel.repaint();
 	}
-
 }
