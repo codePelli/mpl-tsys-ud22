@@ -5,6 +5,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Ejercicios.UD22.Connection.ConnectionSQL;
+import Ejercicios.UD22.View.Cliente.ViewCliente;
+import Ejercicios.UD22.View.Video.ViewVideo;
+
 import javax.swing.JLabel;
 import java.awt.GridLayout;
 import javax.swing.JButton;
@@ -24,6 +29,7 @@ public class ViewConnect extends JFrame {
 	 * Create the frame.
 	 */
 	public ViewConnect() {
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 89);
 		contentPane = new JPanel();
